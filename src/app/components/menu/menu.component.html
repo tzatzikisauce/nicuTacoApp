@@ -1,0 +1,167 @@
+<!-- Button trigger modal -->
+
+<div class="row">
+  <div class="column">
+    <button type="button" (click)="this.food.name = 'Taco'; this.food.price = 7.99; this.foodTotal = 7.99;"
+      style="width: 20rem;" class="card" data-toggle="modal" data-target="#myModal">
+      <div class="card-body">
+        <h3>Taco</h3>
+        <p>Customize your own taco with your choice of meat, and salsa.</p>
+        <p>$7.99</p>
+      </div>
+    </button>
+  </div>
+  <div class="column">
+    <button type="button" (click)="this.food.name = 'Burrito'; this.food.price = 8.99; this.foodTotal = 8.99;"
+      style="width: 20rem;" class="card" data-toggle="modal" data-target="#myModal">
+      <div class="card-body">
+        <h3>Burrito</h3>
+        <p>Customize your own burrito with your choice of meat, and salsa.</p>
+        <p>$8.99</p>
+      </div>
+    </button>
+  </div>
+  <div class="column">
+    <button type="button" (click)="this.food.name ='Burrito Bowl'; this.food.price = 6.99; this.foodTotal = 6.99;"
+      style="width: 20rem;" class="card" data-toggle="modal" data-target="#myModal">
+      <div class="card-body">
+        <h3>Bowl</h3>
+        <p>Customize your own burrito bowl with your choice of meat, and salsa.</p>
+        <p>$6.99</p>
+      </div>
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="#myModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ food.name }}</h5>
+          <button type="button" (click)="onReset()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" (submit)="onSubmit()">
+
+            <div class="form-group">
+              <!-- Frequency Field -->
+              <label class="control-label col-sm-2">Meat</label>
+              <div class="col-sm-10">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="meat" ngModel type="radio" required value="beef" [checked]='true'
+                      (click)="setMeat('Beef')" />
+                    Beef
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="meat" ngModel type="radio" required value="chicken" [checked]='true'
+                      (click)="setMeat('Chicken')" />
+                    Chicken
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="meat" ngModel type="radio" required value="noMeat" [checked]='true'
+                      (click)="setMeat('No Meat')" />
+                    No Meat
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <!-- Frequency Field -->
+              <label class="control-label col-sm-2">Salsa</label>
+              <div class="col-sm-10">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="salsa" ngModel type="radio" required value="picco" [checked]='true'
+                      (click)="setSalsa('Picco de Gallo')" />
+                    Picco de Gallo
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="salsa" ngModel type="radio" required value="devil" [checked]='true'
+                      (click)="setSalsa('Habanero Devil Sauce')" />
+                    Harbenero Devil Sauce
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="salsa" ngModel type="radio" required value="verde" [checked]='true'
+                      (click)="setSalsa('Verde Salsa')" />
+                    Verde Salsa
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <!-- Frequency Field -->
+              <label class="control-label col-sm-2">Drink</label>
+              <div class="col-sm-10">
+                <div class="radio">
+                  <label class="radio">
+                    <input (click)="addDrink(1)" name="group3" type="radio" required value="drink" />
+                    Yes +$1.25
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input (click)="addDrink(0)" name="group3" type="radio" required value="noDrink" />
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <!-- Submit Button -->
+              <div class="col-sm-10 col-sm-offset-2">
+                <button type="submit" class="btn btn-primary btn-success">Add to cart
+                  {{ this.foodTotal | currency }}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Checkout button -->
+  <div class="div">
+    <button [disabled]="!isValidCheckout" id="checkout" type="button" (click)="onCheckout();"
+      class="btn btn-success btn-primary">
+      <h3>Checkout <div id="orderLength" *ngIf="this.order.length!=0">{{this.order.length}}</div>
+      </h3>
+    </button>
+  </div>
+  <!-- Checkout Receipt -->
+  <div id="receipt" class="card mb-5" style="width: 18rem; height: 18rem;"
+    *ngIf="this.checkout === true && total != 0;">
+    <div id="items">
+      <div *ngFor="let x of order">
+        <div>
+          {{ x.name }} <div id="money">{{ x.price | currency }}</div><br>
+          <div id="foodContents">
+            {{ x.meat }}<br>
+            {{ x.salsa }}<br>
+            <div *ngIf="x.drink === true">Drink <div id="money">+$1.25</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div id="subtotal">
+      Subtotal: <div id="money">{{ total | currency }}</div> <br>
+      Tax (8.445%): <div id="money">{{ total*0.08445 | currency }}</div> <br>
+      Total: <div id="money">{{ total + total*0.08445 | currency }}</div>
+    </div>
+
+  </div>

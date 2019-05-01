@@ -1,0 +1,61 @@
+
+.column {
+ float: left;
+ width: 33.3%;
+ padding: 30px;
+ 
+}
+
+.row::after {
+ content: "";
+ clear: both;
+ display: table;
+}
+
+#checkout {
+ width:300px; 
+ height: 75px; line-height: 50px;
+ position: absolute;
+ top: 50%; margin-top:-100px; 
+ left: 50%; margin-left:-530px;
+ text-transform: uppercase;
+ text-align:center
+ 
+}
+#orderLength {
+  display:inline;
+}
+
+#receipt {
+ position: absolute;
+ height: 100px; line-height: 25px;
+ top: 50%; margin-top:-100px; 
+ left: 50%; margin-left:-145px;
+ max-width: 100%;
+ 
+ 
+ /* background: #F2F2F2; */
+ 
+ border-right: 0px;
+ box-shadow: 0px 0px 5px 0px black ;
+ padding:10px;
+
+}
+#items {
+ overflow: scroll;
+ overflow-x: hidden;
+ height: 200px;
+}
+
+#subtotal {
+ padding: 5px;
+}
+
+#foodContents {
+  color: #ccc;
+  font-size: 15px;
+}
+
+#money {
+ float: right;
+}
